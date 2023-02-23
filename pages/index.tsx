@@ -46,13 +46,13 @@ const Home: NextPage = () => {
             <input
               type="number"
               value={quantity}
-              onChange={(e) => setQuantity(1)}
+              onChange={(e) => setQuantity(parseInt(e.target.value))}
             />
           </label>
         </div>
 
         <div style={{ marginTop: "20px" }}>
-          {/* <Web3Button
+          <Web3Button
             contractAddress={contractAddress}
             action={(contract) => {
               contract.call("claim", address, quantity);
@@ -67,9 +67,9 @@ const Home: NextPage = () => {
                     : `${utils.formatEther(price)} ETH`
                 })`
               : ""}
-          </Web3Button> */}
+          </Web3Button>
 
-          <Web3Button //IF SOLD OUT
+          {/* <Web3Button //IF SOLD OUT
             contractAddress={contractAddress}
             action={(contract) => {
               contract.call("claim", address, quantity);
@@ -77,7 +77,7 @@ const Home: NextPage = () => {
             isDisabled={!quantity || parseInt(quantity) < 1 || isLoading}
           >
             SOLD OUT{" "}
-          </Web3Button>
+          </Web3Button> */}
         </div>
       </main>
     </div>
