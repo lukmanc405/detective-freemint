@@ -51,10 +51,15 @@ const Home: NextPage = () => {
         </h3>
 
         <p className={styles.description}>Detective Gems, Go Brrrrr!!! </p>
-
+        <img
+          src="https://bafybeigh553cnodspgtcbsd33fieciskqpg6ugkczad4ejthahidt55zia.ipfs.nftstorage.link/test-NFT-02.png"
+          alt="Genesis NFT"
+          width="300"
+          height="330"
+        ></img>
         {!loadingClaimed && !loadingTotal ? (
           <p>
-            {totalMint} / {MAX_AMOUNT_MINT}
+            Total Genesis MINTED : {totalMint} / {MAX_AMOUNT_MINT}
           </p>
         ) : (
           <p>loading...</p>
