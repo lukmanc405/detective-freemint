@@ -1,9 +1,11 @@
 import {
   ConnectWallet,
   useAddress,
+  useClaimedNFTSupply,
   useConnect,
   useContract,
   useContractRead,
+  useTotalCount,
   Web3Button,
 } from '@thirdweb-dev/react'
 import { utils } from 'ethers'
@@ -12,8 +14,6 @@ import { useState } from 'react'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
-  const totalMint: number = 10
-  const MAX_AMOUNT_MINT: number = 100
   const contractAddress: string = '0x1c0133a5c54b5ec1f11e6c80097a7dd3fc938b56'
 
   const address = useAddress()
@@ -26,12 +26,19 @@ const Home: NextPage = () => {
   const [quantity, setQuantity] = useState<number>(0)
   const { contract } = useContract(contractAddress)
 
-  const { data: price, isLoading } = useContractRead(
+  const { data: price } = useContractRead(
     contract,
     'priceForAddress',
     address,
     quantity
   )
+
+  const { data: claimedNFT, isLoading: loadingClaimed } =
+    useClaimedNFTSupply(contract)
+  const { data: totalCount, isLoading: loadingTotal } = useTotalCount(contract)
+
+  const totalMint: number = claimedNFT ? claimedNFT?.toNumber() : 0
+  const MAX_AMOUNT_MINT: number = totalCount ? totalCount?.toNumber() : 0
 
   return (
     <div className={styles.container}>
@@ -44,6 +51,14 @@ const Home: NextPage = () => {
         </h3>
 
         <p className={styles.description}>Detective Gems, Go Brrrrr!!! </p>
+
+        {!loadingClaimed && !loadingTotal ? (
+          <p>
+            {totalMint} / {MAX_AMOUNT_MINT}
+          </p>
+        ) : (
+          <p>loading...</p>
+        )}
 
         <div className={styles.connect}>
           <ConnectWallet />
